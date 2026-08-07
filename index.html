@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>STAR SKY – Minecraft-сервер</title>
+  <meta name="description" content="STAR SKY – Minecraft-сервер." />
+
+  <link rel="icon" href="assets/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png" />
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+
+  <meta property="og:title" content="STAR SKY – Minecraft-сервер" />
+  <meta property="og:description" content="Minecraft-сервер STAR SKY. Присоединяйся!" />
+  <meta property="og:image" content="https://starsky-site.ru/assets/og-banner.jpg" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://starsky-site.ru/" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="shared.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <style>
+    /* ===== HERO (только для главной) ===== */
+    #hero {
+      position: relative;
+      height: 100vh;
+      min-height: 560px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 60% at 50% 50%, rgba(244,218,144,0.10) 0%, transparent 70%),
+        var(--bg);
+    }
+    .hero-bg::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22600%22%20height%3D%22600%22%3E%3Cg%20fill%3D%22%23F4DA90%22%3E%3Ccircle%20cx%3D%22194%22%20cy%3D%2291%22%20r%3D%220.6%22%20opacity%3D%220.29%22%2F%3E%3Ccircle%20cx%3D%22322%22%20cy%3D%22219%22%20r%3D%220.6%22%20opacity%3D%220.75%22%2F%3E%3Ccircle%20cx%3D%22129%22%20cy%3D%2252%22%20r%3D%221.2%22%20opacity%3D%220.29%22%2F%3E%3Ccircle%20cx%3D%2254%22%20cy%3D%22255%22%20r%3D%221.6%22%20opacity%3D%220.32%22%2F%3E%3Ccircle%20cx%3D%22134%22%20cy%3D%22376%22%20r%3D%220.6%22%20opacity%3D%220.57%22%2F%3E%3Ccircle%20cx%3D%22238%22%20cy%3D%22586%22%20r%3D%220.6%22%20opacity%3D%220.56%22%2F%3E%3Ccircle%20cx%3D%2280%22%20cy%3D%22251%22%20r%3D%221.6%22%20opacity%3D%220.31%22%2F%3E%3Ccircle%20cx%3D%22185%22%20cy%3D%22490%22%20r%3D%220.8%22%20opacity%3D%220.31%22%2F%3E%3Ccircle%20cx%3D%22343%22%20cy%3D%22113%22%20r%3D%220.6%22%20opacity%3D%220.55%22%2F%3E%3Ccircle%20cx%3D%2238%22%20cy%3D%2236%22%20r%3D%220.8%22%20opacity%3D%220.52%22%2F%3E%3Ccircle%20cx%3D%22319%22%20cy%3D%22466%22%20r%3D%221.2%22%20opacity%3D%220.57%22%2F%3E%3Ccircle%20cx%3D%22272%22%20cy%3D%22180%22%20r%3D%220.8%22%20opacity%3D%220.63%22%2F%3E%3Ccircle%20cx%3D%22146%22%20cy%3D%22345%22%20r%3D%221.6%22%20opacity%3D%220.52%22%2F%3E%3Ccircle%20cx%3D%22206%22%20cy%3D%22269%22%20r%3D%221.6%22%20opacity%3D%220.79%22%2F%3E%3Ccircle%20cx%3D%2271%22%20cy%3D%22251%22%20r%3D%221%22%20opacity%3D%220.33%22%2F%3E%3Ccircle%20cx%3D%22293%22%20cy%3D%2224%22%20r%3D%220.6%22%20opacity%3D%220.67%22%2F%3E%3Ccircle%20cx%3D%22344%22%20cy%3D%22525%22%20r%3D%221%22%20opacity%3D%220.44%22%2F%3E%3Ccircle%20cx%3D%22210%22%20cy%3D%22298%22%20r%3D%221.2%22%20opacity%3D%220.29%22%2F%3E%3Ccircle%20cx%3D%2256%22%20cy%3D%22162%22%20r%3D%220.6%22%20opacity%3D%220.28%22%2F%3E%3Ccircle%20cx%3D%22421%22%20cy%3D%22388%22%20r%3D%221.2%22%20opacity%3D%220.41%22%2F%3E%3Ccircle%20cx%3D%22231%22%20cy%3D%22401%22%20r%3D%220.6%22%20opacity%3D%220.77%22%2F%3E%3Ccircle%20cx%3D%22213%22%20cy%3D%22367%22%20r%3D%221.2%22%20opacity%3D%220.28%22%2F%3E%3Ccircle%20cx%3D%22461%22%20cy%3D%2278%22%20r%3D%220.8%22%20opacity%3D%220.47%22%2F%3E%3Ccircle%20cx%3D%22550%22%20cy%3D%22298%22%20r%3D%220.8%22%20opacity%3D%220.5%22%2F%3E%3Ccircle%20cx%3D%22330%22%20cy%3D%22530%22%20r%3D%221.2%22%20opacity%3D%220.73%22%2F%3E%3Ccircle%20cx%3D%22167%22%20cy%3D%22249%22%20r%3D%221%22%20opacity%3D%220.63%22%2F%3E%3Ccircle%20cx%3D%22228%22%20cy%3D%22138%22%20r%3D%220.6%22%20opacity%3D%220.35%22%2F%3E%3Ccircle%20cx%3D%22139%22%20cy%3D%22140%22%20r%3D%221.2%22%20opacity%3D%220.71%22%2F%3E%3Ccircle%20cx%3D%22109%22%20cy%3D%22169%22%20r%3D%220.8%22%20opacity%3D%220.48%22%2F%3E%3Ccircle%20cx%3D%22222%22%20cy%3D%22340%22%20r%3D%220.8%22%20opacity%3D%220.63%22%2F%3E%3Ccircle%20cx%3D%22309%22%20cy%3D%22371%22%20r%3D%220.6%22%20opacity%3D%220.5%22%2F%3E%3Ccircle%20cx%3D%22523%22%20cy%3D%22571%22%20r%3D%221.6%22%20opacity%3D%220.47%22%2F%3E%3Ccircle%20cx%3D%22239%22%20cy%3D%2262%22%20r%3D%221.2%22%20opacity%3D%220.28%22%2F%3E%3Ccircle%20cx%3D%2240%22%20cy%3D%22125%22%20r%3D%220.8%22%20opacity%3D%220.31%22%2F%3E%3Ccircle%20cx%3D%22360%22%20cy%3D%2261%22%20r%3D%221.6%22%20opacity%3D%220.33%22%2F%3E%3Ccircle%20cx%3D%2261%22%20cy%3D%22218%22%20r%3D%220.6%22%20opacity%3D%220.29%22%2F%3E%3Ccircle%20cx%3D%22125%22%20cy%3D%22226%22%20r%3D%221%22%20opacity%3D%220.78%22%2F%3E%3Ccircle%20cx%3D%22361%22%20cy%3D%22284%22%20r%3D%220.6%22%20opacity%3D%220.72%22%2F%3E%3Ccircle%20cx%3D%22596%22%20cy%3D%22280%22%20r%3D%221.2%22%20opacity%3D%220.42%22%2F%3E%3Ccircle%20cx%3D%2286%22%20cy%3D%22450%22%20r%3D%221%22%20opacity%3D%220.51%22%2F%3E%3Ccircle%20cx%3D%22415%22%20cy%3D%22310%22%20r%3D%220.8%22%20opacity%3D%220.77%22%2F%3E%3Ccircle%20cx%3D%22317%22%20cy%3D%2288%22%20r%3D%221.6%22%20opacity%3D%220.75%22%2F%3E%3Ccircle%20cx%3D%22455%22%20cy%3D%22179%22%20r%3D%220.6%22%20opacity%3D%220.63%22%2F%3E%3Ccircle%20cx%3D%22157%22%20cy%3D%22220%22%20r%3D%220.8%22%20opacity%3D%220.45%22%2F%3E%3Ccircle%20cx%3D%22134%22%20cy%3D%22325%22%20r%3D%221.6%22%20opacity%3D%220.43%22%2F%3E%3Ccircle%20cx%3D%22134%22%20cy%3D%22487%22%20r%3D%220.8%22%20opacity%3D%220.69%22%2F%3E%3Ccircle%20cx%3D%22491%22%20cy%3D%22444%22%20r%3D%220.8%22%20opacity%3D%220.36%22%2F%3E%3Ccircle%20cx%3D%22296%22%20cy%3D%22439%22%20r%3D%220.6%22%20opacity%3D%220.68%22%2F%3E%3Ccircle%20cx%3D%22283%22%20cy%3D%22116%22%20r%3D%221.6%22%20opacity%3D%220.78%22%2F%3E%3Ccircle%20cx%3D%22268%22%20cy%3D%22562%22%20r%3D%221%22%20opacity%3D%220.78%22%2F%3E%3Ccircle%20cx%3D%22219%22%20cy%3D%22132%22%20r%3D%220.8%22%20opacity%3D%220.51%22%2F%3E%3Ccircle%20cx%3D%22203%22%20cy%3D%22290%22%20r%3D%221.6%22%20opacity%3D%220.71%22%2F%3E%3Ccircle%20cx%3D%22288%22%20cy%3D%22392%22%20r%3D%220.6%22%20opacity%3D%220.71%22%2F%3E%3Ccircle%20cx%3D%2272%22%20cy%3D%22233%22%20r%3D%220.8%22%20opacity%3D%220.51%22%2F%3E%3Ccircle%20cx%3D%22107%22%20cy%3D%22473%22%20r%3D%221%22%20opacity%3D%220.3%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");
+      background-size: 480px 480px;
+      background-repeat: repeat;
+    }
+    .hero-content {
+      position: relative;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 22px;
+      padding: 20px;
+    }
+    .star-wrapper {
+      position: relative;
+      width: 200px;
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #particleCanvas {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 2;
+    }
+    .hero-icon {
+      position: relative;
+      z-index: 1;
+      width: 140px;
+      height: 140px;
+      cursor: pointer;
+      user-select: none;
+      -webkit-user-select: none;
+      will-change: transform, filter;
+      transform-style: flat;
+      filter: drop-shadow(0 0 25px rgba(244,218,144,0.55)) drop-shadow(0 0 50px rgba(244,218,144,0.25));
+    }
+    .hero-icon svg { display: block; width: 100%; height: 100%; }
+    .hero-title {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: clamp(2.5rem, 8vw, 5.5rem);
+      letter-spacing: -0.01em;
+      line-height: 1;
+      color: #fff;
+      text-shadow: 0 0 40px rgba(244,218,144,0.35);
+    }
+    .hero-title span { color: var(--red); }
+    .hero-sub {
+      font-size: 1rem;
+      color: var(--muted);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+    .hero-badge {
+      display: inline-block;
+      padding: 8px 20px;
+      border: 1px solid var(--red);
+      color: var(--red);
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+    .hero-ip { margin-top: 10px; }
+
+    #about { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+    .about-text p {
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 0.95rem;
+      margin-bottom: 16px;
+    }
+
+    #explore { background: var(--surface); border-top: 1px solid var(--border); }
+    .explore-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+      padding: 6px;
+    }
+    .explore-card {
+      background: var(--card);
+      padding: 32px;
+      text-decoration: none;
+      display: block;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+    }
+    .explore-card:hover {
+      background: #32485a;
+      border-color: var(--accent2);
+      transform: translateY(-4px) rotate(var(--tilt, 0deg));
+      box-shadow: 0 14px 32px rgba(0,0,0,0.28);
+    }
+    .explore-grid .explore-card:nth-child(4n+1) { --tilt: -0.5deg; }
+    .explore-grid .explore-card:nth-child(4n+2) { --tilt: 0.5deg; margin-top: 8px; }
+    .explore-grid .explore-card:nth-child(4n+3) { --tilt: 0.4deg; }
+    .explore-grid .explore-card:nth-child(4n+4) { --tilt: -0.4deg; margin-top: 4px; }
+    .explore-card .eyebrow {
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.65rem;
+      color: var(--red);
+      letter-spacing: 0.15em;
+      margin-bottom: 10px;
+    }
+    .explore-card h3 { color: #fff; font-size: 1.05rem; margin-bottom: 8px; }
+    .explore-card p { color: var(--muted); font-size: 0.85rem; line-height: 1.6; }
+
+    @media (max-width: 768px) {
+      .star-wrapper { width: 140px; height: 140px; }
+      .hero-icon { width: 100px; height: 100px; }
+      .about-grid { grid-template-columns: 1fr; gap: 40px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="site-nav">
+    <a href="index.html" class="nav-logo"><span class="nav-logo-star"></span>STAR SKY</a>
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Главная</a></li>
+      <li><a href="join/">Вступление</a></li>
+      <li><a href="about/">О сервере</a></li>
+      <li><a href="rules/">Правила</a></li>
+      <li><a href="wiki/">Вики</a></li>
+      <li><a href="news/">Новости</a></li>
+      <li><a href="content/">Контент</a></li>
+      <li><a href="faq/">FAQ</a></li>
+    </ul>
+    <button class="nav-burger" id="burger" aria-label="Меню">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="nav-mobile" id="mobileMenu">
+    <a href="index.html" class="active">Главная</a>
+    <a href="join/">Вступление</a>
+    <a href="about/">О сервере</a>
+    <a href="rules/">Правила</a>
+    <a href="wiki/">Вики</a>
+    <a href="news/">Новости</a>
+    <a href="content/">Контент</a>
+    <a href="faq/">FAQ</a>
+  </div>
+
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <div class="star-wrapper">
+        <canvas id="particleCanvas" width="260" height="260"></canvas>
+        <div class="hero-icon" id="heroIcon">
+          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="starGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#f9e6b5" />
+                <stop offset="100%" stop-color="#F4DA90" />
+              </linearGradient>
+            </defs>
+            <path fill="url(#starGrad)" d="M 49.01,3.15 Q 50.00,0.00 50.99,3.15 L 58.58,27.30 Q 61.00,35.00 69.14,35.00 L 94.67,35.00 Q 98.00,35.00 95.30,36.98 L 74.60,52.16 Q 68.00,57.00 70.42,64.48 L 78.01,87.94 Q 79.00,91.00 76.39,89.11 L 56.38,74.62 Q 50.00,70.00 43.62,74.62 L 23.61,89.11 Q 21.00,91.00 21.99,87.94 L 29.58,64.48 Q 32.00,57.00 25.40,52.16 L 4.70,36.98 Q 2.00,35.00 5.33,35.00 L 30.86,35.00 Q 39.00,35.00 41.42,27.30 Z" />
+          </svg>
+        </div>
+      </div>
+      <div class="hero-title">STAR <span>SKY</span></div>
+      <div class="hero-sub">Небо, которое ждёт тебя</div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-text fade-in">
+          <div class="section-label">О проекте</div>
+          <div class="section-title">Что такое STAR SKY?</div>
+          <p>STAR SKY – Minecraft-сервер для контент-мейкеров со своим сообществом, атмосферой и постройками игроков.</p>
+          <p>Набор проходит через видео-заявку и собеседование – подробности в разделе «Вступление».</p>
+          <a href="about/" class="btn">Подробнее о сервере</a>
+        </div>
+        <div class="stat-grid fade-in">
+          <div class="stat">
+            <div class="stat-num">1</div>
+            <div class="stat-label">Сезон</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">26.1.2</div>
+            <div class="stat-label">Версия</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">Заявки</div>
+            <div class="stat-label">Статус сервера</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">Сюжет</div>
+            <div class="stat-label">Формат игры</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="explore">
+    <div class="container">
+      <div class="section-label fade-in">Навигация</div>
+      <div class="section-title fade-in">Изучи проект</div>
+      <div class="explore-grid fade-in">
+        <a href="join/" class="explore-card">
+          <div class="eyebrow">Как попасть на сервер</div>
+          <h3>Вступление</h3>
+          <p>Видео-заявка и собеседование – как проходит набор.</p>
+        </a>
+        <a href="rules/" class="explore-card">
+          <div class="eyebrow">Обязательно к прочтению</div>
+          <h3>Правила сервера</h3>
+          <p>Что можно и что нельзя – прочитай перед входом.</p>
+        </a>
+        <a href="wiki/" class="explore-card">
+          <div class="eyebrow">Гайды</div>
+          <h3>Вики</h3>
+          <p>Механики сервера, полезные команды и советы новичкам.</p>
+        </a>
+        <a href="news/" class="explore-card">
+          <div class="eyebrow">Обновления</div>
+          <h3>Новости</h3>
+          <p>Что нового на сервере: патчи, события, изменения.</p>
+        </a>
+        <a href="content/" class="explore-card">
+          <div class="eyebrow">Медиа</div>
+          <h3>Контент</h3>
+          <p>Видео, стримы и скриншоты построек от игроков.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="footer-logo">STAR SKY</div>
+    <ul class="footer-links">
+      <li><a href="rules/">Правила</a></li>
+      <li><a href="faq/">FAQ</a></li>
+      <li><a href="join/">Вступление</a></li>
+      <li><a href="about/">О сервере</a></li>
+    </ul>
+    <div class="footer-copy">© 2026 STAR SKY. Автор дизайна: L1nar</div>
+  </footer>
+
+  <script src="shared.js"></script>
+  <script>
+    /* ===== Интерактив звезды (только на главной) ===== */
+    const icon = document.getElementById('heroIcon');
+    const canvas = document.getElementById('particleCanvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    const isDesktop = window.innerWidth > 768;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (!prefersReducedMotion) {
+      gsap.to(icon, {
+        scale: 1.06,
+        duration: 1.5,
+        yoyo: true,
+        repeat: -1,
+        ease: "power1.inOut",
+      });
+    }
+
+    class PixelParticle {
+      constructor(x, y) {
+        this.x = x; this.y = y;
+        this.size = Math.random() * 3 + 2;
+        const angle = Math.random() * Math.PI * 2;
+        const speed = Math.random() * 5 + 2;
+        this.vx = Math.cos(angle) * speed;
+        this.vy = Math.sin(angle) * speed;
+        const colors = ['#f9e6b5', '#F4DA90', '#D9B07B', '#fff3d6'];
+        this.color = colors[Math.floor(Math.random() * colors.length)];
+        this.alpha = 1;
+        this.decay = Math.random() * 0.02 + 0.015;
+      }
+      update() {
+        this.x += this.vx; this.y += this.vy;
+        this.vx *= 0.97; this.vy *= 0.97;
+        this.vy += 0.03;
+        this.alpha -= this.decay;
+      }
+      draw() {
+        ctx.save();
+        ctx.globalAlpha = this.alpha;
+        ctx.fillStyle = this.color;
+        ctx.shadowBlur = 12; ctx.shadowColor = this.color;
+        ctx.fillRect(this.x - this.size/2, this.y - this.size/2, this.size, this.size);
+        ctx.restore();
+      }
+    }
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let i = particles.length - 1; i >= 0; i--) {
+        particles[i].update();
+        if (particles[i].alpha <= 0) { particles.splice(i, 1); }
+        else { particles[i].draw(); }
+      }
+      requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+
+    let curX = 0, curY = 0, tarX = 0, tarY = 0;
+    const lerpSpeed = 0.1;
+
+    if (isDesktop && !prefersReducedMotion) {
+      document.addEventListener('mousemove', e => {
+        const starRect = icon.getBoundingClientRect();
+        const starCenterX = starRect.left + starRect.width / 2;
+        const starCenterY = starRect.top + starRect.height / 2;
+        const diffX = e.clientX - starCenterX;
+        const diffY = e.clientY - starCenterY;
+        tarX = Math.max(-25, Math.min(25, diffX * 0.08));
+        tarY = Math.max(-25, Math.min(25, diffY * 0.08));
+      });
+      document.addEventListener('mouseleave', () => { tarX = 0; tarY = 0; });
+    }
+
+    function updateStarPos() {
+      if (isDesktop && !prefersReducedMotion) {
+        curX += (tarX - curX) * lerpSpeed;
+        curY += (tarY - curY) * lerpSpeed;
+        icon.style.transform = `translate(${curX}px, ${curY}px)`;
+      }
+      requestAnimationFrame(updateStarPos);
+    }
+    updateStarPos();
+
+    icon.addEventListener('click', () => {
+      for (let i = 0; i < 45; i++) {
+        particles.push(new PixelParticle(canvas.width / 2, canvas.height / 2));
+      }
+      gsap.fromTo(icon,
+        { scale: 1 },
+        { scale: 0.85, duration: 0.1, ease: "back.in(2)", yoyo: true, repeat: 1, overwrite: "auto" }
+      );
+    });
+  </script>
+</body>
+</html>

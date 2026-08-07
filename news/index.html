@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Новости – STAR SKY</title>
+  <meta name="description" content="Новости и девлог сервера STAR SKY." />
+
+  <link rel="icon" href="../assets/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon-16.png" />
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png" />
+
+  <meta property="og:title" content="Новости – STAR SKY" />
+  <meta property="og:description" content="Новости и девлог сервера STAR SKY." />
+  <meta property="og:image" content="https://starsky-site.ru/assets/og-banner.jpg" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://starsky-site.ru/news/" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../shared.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
+</head>
+<body>
+
+  <nav class="site-nav">
+    <a href="../" class="nav-logo"><span class="nav-logo-star"></span>STAR SKY</a>
+    <ul class="nav-links">
+      <li><a href="../">Главная</a></li>
+      <li><a href="../join/">Вступление</a></li>
+      <li><a href="../about/">О сервере</a></li>
+      <li><a href="../rules/">Правила</a></li>
+      <li><a href="../wiki/">Вики</a></li>
+      <li><a href="../news/" class="active">Новости</a></li>
+      <li><a href="../content/">Контент</a></li>
+      <li><a href="../faq/">FAQ</a></li>
+    </ul>
+    <button class="nav-burger" id="burger" aria-label="Меню">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="nav-mobile" id="mobileMenu">
+    <a href="../">Главная</a>
+    <a href="../join/">Вступление</a>
+    <a href="../about/">О сервере</a>
+    <a href="../rules/">Правила</a>
+    <a href="../wiki/">Вики</a>
+    <a href="../news/" class="active">Новости</a>
+    <a href="../content/">Контент</a>
+    <a href="../faq/">FAQ</a>
+  </div>
+
+  <div class="page-hero">
+    <div class="section-label">Обновления</div>
+    <h1>Новости сервера</h1>
+    <p class="lead">Что нового на STAR SKY: открытие сервера, изменения и ближайшие планы.</p>
+  </div>
+
+  <section>
+    <div class="container narrow">
+      <div class="news-tabs fade-in" role="tablist">
+        <button class="news-tab active" data-tab="news" role="tab" aria-selected="true">Новости</button>
+        <button class="news-tab" data-tab="devlog" role="tab" aria-selected="false">Девлог</button>
+      </div>
+
+      <div id="newsPanel" class="news-panel active">
+        <div id="newsList">
+          <p style="color: var(--muted); font-size: 0.85rem;">Загрузка новостей…</p>
+        </div>
+      </div>
+
+      <div id="devlogPanel" class="news-panel">
+        <div id="devlogList" class="timeline">
+          <p style="color: var(--muted); font-size: 0.85rem;">Загрузка девлога…</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="footer-logo">STAR SKY</div>
+    <ul class="footer-links">
+      <li><a href="../rules/">Правила</a></li>
+      <li><a href="../faq/">FAQ</a></li>
+      <li><a href="../wiki/">Вики</a></li>
+    </ul>
+    <div class="footer-copy">© 2026 STAR SKY. Автор дизайна: L1nar</div>
+  </footer>
+
+  <script src="../shared.js"></script>
+  <script>
+    async function loadNews() {
+      const listEl = document.getElementById('newsList');
+      try {
+        const res = await fetch('../news-data/index.json', { cache: 'no-store' });
+        if (!res.ok) throw new Error('index.json not found');
+        const items = await res.json();
+
+        // Показываем свежие новости сверху (порядок как в файле – переворачивать не будем,
+        // просто добавляйте новые записи в начало массива index.json)
+        if (!items.length) {
+          listEl.innerHTML = '<p style="color: var(--muted); font-size: 0.9rem;">Пока новостей нет. Загляни позже.</p>';
+          return;
+        }
+
+        listEl.innerHTML = '';
+        for (const item of items) {
+          const wrap = document.createElement('div');
+          wrap.className = 'news-item fade-in';
+
+          const dateEl = document.createElement('div');
+          dateEl.className = 'news-date';
+          dateEl.textContent = item.date || '';
+
+          const titleEl = document.createElement('h3');
+          titleEl.textContent = item.title || 'Новость';
+
+          const bodyEl = document.createElement('div');
+          bodyEl.style.color = 'var(--muted)';
+          bodyEl.style.fontSize = '0.88rem';
+          bodyEl.style.lineHeight = '1.7';
+
+          wrap.appendChild(dateEl);
+          wrap.appendChild(titleEl);
+          wrap.appendChild(bodyEl);
+          listEl.appendChild(wrap);
+
+          // Плавное появление, как остальные .fade-in блоки
+          requestAnimationFrame(() => {
+            new IntersectionObserver((entries, obs) => {
+              entries.forEach(e => {
+                if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+              });
+            }, { threshold: 0.1 }).observe(wrap);
+          });
+
+          if (item.file) {
+            try {
+              const mdRes = await fetch(item.file, { cache: 'no-store' });
+              if (mdRes.ok) {
+                const mdText = await mdRes.text();
+                bodyEl.innerHTML = marked.parse(mdText);
+              } else {
+                bodyEl.textContent = 'Не удалось загрузить текст новости.';
+              }
+            } catch (e) {
+              bodyEl.textContent = 'Не удалось загрузить текст новости.';
+            }
+          }
+        }
+      } catch (err) {
+        listEl.innerHTML = '<p style="color: var(--muted); font-size: 0.9rem;">Новости пока недоступны.</p>';
+        console.error(err);
+      }
+    }
+    loadNews();
+
+    // Переключение табов Новости / Девлог
+    document.querySelectorAll('.news-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.news-tab').forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected', 'false'); });
+        tab.classList.add('active');
+        tab.setAttribute('aria-selected', 'true');
+
+        const target = tab.dataset.tab;
+        document.getElementById('newsPanel').classList.toggle('active', target === 'news');
+        document.getElementById('devlogPanel').classList.toggle('active', target === 'devlog');
+
+        if (target === 'devlog' && !devlogLoaded) {
+          loadDevlog();
+        }
+      });
+    });
+
+    let devlogLoaded = false;
+    async function loadDevlog() {
+      devlogLoaded = true;
+      const listEl = document.getElementById('devlogList');
+      try {
+        const res = await fetch('../news-data/devlog.json', { cache: 'no-store' });
+        if (!res.ok) throw new Error('devlog.json not found');
+        const items = await res.json();
+
+        if (!items.length) {
+          listEl.innerHTML = '<p style="color: var(--muted); font-size: 0.9rem;">Записей девлога пока нет.</p>';
+          return;
+        }
+
+        listEl.innerHTML = '';
+        items.forEach(entry => {
+          const row = document.createElement('div');
+          row.className = 'timeline-item fade-in';
+
+          const head = document.createElement('div');
+          head.className = 'timeline-head';
+          head.innerHTML = `
+            <span class="timeline-num">ТО #${entry.number ?? '?'}</span>
+            <span class="timeline-date">${entry.date ?? ''}</span>
+            <span class="timeline-duration">${entry.duration ?? ''}</span>
+          `;
+          row.appendChild(head);
+
+          const makeGroup = (label, arr, cls) => {
+            if (!arr || !arr.length) return null;
+            const g = document.createElement('div');
+            g.className = `timeline-group ${cls}`;
+            const h = document.createElement('div');
+            h.className = 'timeline-group-label';
+            h.textContent = label;
+            g.appendChild(h);
+            const ul = document.createElement('ul');
+            arr.forEach(txt => {
+              const li = document.createElement('li');
+              li.textContent = txt;
+              ul.appendChild(li);
+            });
+            g.appendChild(ul);
+            return g;
+          };
+
+          const added = makeGroup('Добавлено', entry.added, 'added');
+          const removed = makeGroup('Удалено', entry.removed, 'removed');
+          const fixed = makeGroup('Исправлено', entry.fixed, 'fixed');
+          [added, removed, fixed].forEach(g => { if (g) row.appendChild(g); });
+
+          listEl.appendChild(row);
+
+          requestAnimationFrame(() => {
+            new IntersectionObserver((entries2, obs) => {
+              entries2.forEach(e => {
+                if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+              });
+            }, { threshold: 0.1 }).observe(row);
+          });
+        });
+      } catch (err) {
+        listEl.innerHTML = '<p style="color: var(--muted); font-size: 0.9rem;">Девлог пока недоступен.</p>';
+        console.error(err);
+      }
+    }
+  </script>
+</body>
+</html>
