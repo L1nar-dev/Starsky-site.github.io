@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Страница не найдена – STAR SKY</title>
+  <meta name="description" content="Такой страницы не существует на сайте STAR SKY." />
+
+  <link rel="icon" href="assets/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png" />
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="shared.css" />
+  <style>
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background:
+        radial-gradient(ellipse 60% 60% at 50% 40%, rgba(244,218,144,0.10) 0%, transparent 70%),
+        var(--bg);
+    }
+    .notfound-wrap {
+      max-width: 520px;
+      width: 100%;
+      padding: 48px 32px;
+      text-align: center;
+    }
+    .notfound-star {
+      width: 90px;
+      height: 90px;
+      margin: 0 auto 24px;
+      opacity: 0.7;
+    }
+    .notfound-star svg { display: block; width: 100%; height: 100%; }
+    .notfound-code {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: clamp(3rem, 12vw, 5rem);
+      color: var(--red);
+      line-height: 1;
+      margin-bottom: 12px;
+    }
+    .notfound-title {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 1.3rem;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+    .notfound-text {
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      margin-bottom: 32px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="notfound-wrap">
+    <div class="notfound-star">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="starGrad404" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#f9e6b5" />
+            <stop offset="100%" stop-color="#F4DA90" />
+          </linearGradient>
+        </defs>
+        <path fill="url(#starGrad404)" d="M 49.01,3.15 Q 50.00,0.00 50.99,3.15 L 58.58,27.30 Q 61.00,35.00 69.14,35.00 L 94.67,35.00 Q 98.00,35.00 95.30,36.98 L 74.60,52.16 Q 68.00,57.00 70.42,64.48 L 78.01,87.94 Q 79.00,91.00 76.39,89.11 L 56.38,74.62 Q 50.00,70.00 43.62,74.62 L 23.61,89.11 Q 21.00,91.00 21.99,87.94 L 29.58,64.48 Q 32.00,57.00 25.40,52.16 L 4.70,36.98 Q 2.00,35.00 5.33,35.00 L 30.86,35.00 Q 39.00,35.00 41.42,27.30 Z" />
+      </svg>
+    </div>
+    <div class="notfound-code">404</div>
+    <div class="notfound-title">Такой звезды на небе нет</div>
+    <p class="notfound-text">Страница не найдена – возможно, ссылка устарела или была введена с ошибкой.</p>
+    <a href="/" class="btn solid">На главную</a>
+  </div>
+
+</body>
+</html>

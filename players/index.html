@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Игроки – STAR SKY</title>
+  <meta name="description" content="Сообщество игроков Minecraft-сервера STAR SKY." />
+
+  <link rel="icon" href="../assets/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon-16.png" />
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png" />
+
+  <meta property="og:title" content="Игроки – STAR SKY" />
+  <meta property="og:description" content="Сообщество игроков Minecraft-сервера STAR SKY." />
+  <meta property="og:image" content="https://starsky-site.ru/assets/og-banner.jpg" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://starsky-site.ru/players/" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../shared.css" />
+</head>
+<body>
+
+  <nav class="site-nav">
+    <a href="../" class="nav-logo"><span class="nav-logo-star"></span>STAR SKY</a>
+    <ul class="nav-links">
+      <li><a href="../">Главная</a></li>
+      <li><a href="../join/">Вступление</a></li>
+      <li><a href="../about/">О сервере</a></li>
+      <li><a href="../players/" class="active">Игроки</a></li>
+      <li><a href="../rules/">Правила</a></li>
+      <li><a href="../wiki/">Вики</a></li>
+      <li><a href="../news/">Новости</a></li>
+      <li><a href="../content/">Контент</a></li>
+      <li><a href="../faq/">FAQ</a></li>
+    </ul>
+    <button class="nav-burger" id="burger" aria-label="Меню">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="nav-mobile" id="mobileMenu">
+    <a href="../">Главная</a>
+    <a href="../join/">Вступление</a>
+    <a href="../about/">О сервере</a>
+    <a href="../players/" class="active">Игроки</a>
+    <a href="../rules/">Правила</a>
+    <a href="../wiki/">Вики</a>
+    <a href="../news/">Новости</a>
+    <a href="../content/">Контент</a>
+    <a href="../faq/">FAQ</a>
+  </div>
+
+  <div class="page-hero">
+    <div class="section-label">Сообщество</div>
+    <h1>Игроки сервера</h1>
+    <p class="lead">Те, кто уже строит и играет на STAR SKY.</p>
+  </div>
+
+  <section>
+    <div class="container">
+      <div class="players-grid" id="playersGrid">
+        <p style="color: var(--muted); font-size: 0.85rem;">Загрузка игроков…</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="footer-logo">STAR SKY</div>
+    <ul class="footer-links">
+      <li><a href="../join/">Вступление</a></li>
+      <li><a href="../rules/">Правила</a></li>
+      <li><a href="../faq/">FAQ</a></li>
+    </ul>
+    <div class="footer-copy">© 2026 STAR SKY. Автор дизайна: L1nar</div>
+  </footer>
+
+  <script src="../shared.js"></script>
+  <script>
+    const FALLBACK_AVATAR = "https://mc-heads.net/avatar/Steve/64";
+
+    function getMcAvatar(name) {
+      return `https://mc-heads.net/avatar/${encodeURIComponent(name)}/64`;
+    }
+
+    function buildSocials(socials) {
+      if (!socials) return '';
+      const links = [];
+      if (socials.tg)      links.push(`<a href="${socials.tg}" target="_blank" rel="noopener">TG</a>`);
+      if (socials.vk)      links.push(`<a href="${socials.vk}" target="_blank" rel="noopener">VK</a>`);
+      if (socials.yt)      links.push(`<a href="${socials.yt}" target="_blank" rel="noopener">YT</a>`);
+      if (socials.discord) links.push(`<a href="${socials.discord}" target="_blank" rel="noopener">DS</a>`);
+      if (socials.tiktok)  links.push(`<a href="${socials.tiktok}" target="_blank" rel="noopener">TT</a>`);
+      return links.length ? `<div class="player-socials">${links.join('')}</div>` : '';
+    }
+
+    async function loadPlayers() {
+      const grid = document.getElementById('playersGrid');
+      try {
+        const res = await fetch('../players-data/index.json', { cache: 'no-store' });
+        if (!res.ok) throw new Error('index.json not found');
+        const players = await res.json();
+
+        if (!players.length) {
+          grid.innerHTML = '<p style="color: var(--muted); font-size: 0.9rem;">Пока никого нет. Загляни позже.</p>';
+          return;
+        }
+
+        grid.innerHTML = '';
+        players.forEach((p, i) => {
+          const card = document.createElement('div');
+          card.className = 'player-card';
+          card.style.transitionDelay = `${(i % 8) * 40}ms`;
+
+          const img = document.createElement('img');
+          img.className = 'player-avatar';
+          img.alt = p.name;
+
+          const mcUrl = getMcAvatar(p.name);
+          // avatar: null -> лицензия, подтягиваем скин по нику с mc-heads.net
+          // avatar: "путь" -> пиратка, локальный обрезанный файл
+          img.src = p.avatar || mcUrl;
+          img.onerror = function () {
+            if (p.avatar && this.src !== mcUrl) {
+              // локальный файл не найден -> пробуем лицензионный скин по нику
+              this.src = mcUrl;
+              this.onerror = () => { this.src = FALLBACK_AVATAR; this.onerror = null; };
+            } else {
+              this.src = FALLBACK_AVATAR;
+              this.onerror = null;
+            }
+          };
+
+          card.innerHTML = `
+            <div class="player-name">${p.name}</div>
+            <div class="player-role">${p.role || ''}</div>
+            ${buildSocials(p.socials)}
+          `;
+          card.insertBefore(img, card.firstChild);
+          grid.appendChild(card);
+        });
+
+        const fadeObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              fadeObserver.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.player-card').forEach(el => fadeObserver.observe(el));
+
+      } catch (err) {
+        grid.innerHTML = '<p style="color: var(--muted); font-size: 0.9rem;">Список игроков пока недоступен.</p>';
+        console.error(err);
+      }
+    }
+    loadPlayers();
+  </script>
+</body>
+</html>
